@@ -809,9 +809,4 @@ public sealed class OpaAccessControl
     {
         return new OpaQueryContext(TrinoIdentity.fromTrinoIdentity(securityContext.getIdentity()), pluginContext, opaHighLevelClient.getAdditionalContext());
     }
-
-    protected OpaHighLevelClient getOpaHighLevelClient()
-    {
-        return this.opaHighLevelClient;
-    }
 }

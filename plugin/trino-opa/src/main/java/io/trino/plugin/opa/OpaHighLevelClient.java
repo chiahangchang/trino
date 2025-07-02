@@ -19,6 +19,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import io.airlift.json.JsonCodec;
+import io.airlift.json.ObjectMapperProvider;
 import io.trino.plugin.opa.schema.OpaAdditionalContext;
 import io.trino.plugin.opa.schema.OpaBatchColumnMaskQueryResult;
 import io.trino.plugin.opa.schema.OpaColumnMaskQueryResult;
@@ -61,7 +62,7 @@ public class OpaHighLevelClient
     private final Optional<URI> opaRowFiltersUri;
     private final Optional<URI> opaColumnMaskingUri;
     private final Optional<URI> opaBatchColumnMaskingUri;
-    protected final OpaAdditionalContext opaAdditionalContext;
+    private final OpaAdditionalContext opaAdditionalContext;
 
     @Inject
     public OpaHighLevelClient(
@@ -204,17 +205,17 @@ public class OpaHighLevelClient
         return new OpaQueryInput(context, OpaQueryInputAction.builder().operation(operation).build());
     }
 
-    private OpaAdditionalContext loadAdditionalContextFromFile(Optional<File> additionalContextFile)
+    private static OpaAdditionalContext loadAdditionalContextFromFile(Optional<File> additionalContextFile)
     {
         if (additionalContextFile.isEmpty()) {
             return new OpaAdditionalContext(ImmutableMap.of());
         }
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+            final ObjectMapper mapper = new ObjectMapperProvider().get();
+            TypeReference<Map<String, String>> typeReference = new TypeReference<>() {};
 
-            Map<String, String> properties = ImmutableMap.copyOf(mapper.readValue(additionalContextFile.get(), typeRef));
+            Map<String, String> properties = ImmutableMap.copyOf(mapper.readValue(additionalContextFile.get(), typeReference));
 
             return new OpaAdditionalContext(properties);
         }

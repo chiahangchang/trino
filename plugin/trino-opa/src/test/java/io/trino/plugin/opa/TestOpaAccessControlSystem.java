@@ -241,7 +241,7 @@ public class TestOpaAccessControlSystem
 
         @Test
         public void testAllowsQueryAndFilters()
-                throws IOException, InterruptedException
+                throws Exception
         {
             OPA_CONTAINER.submitPolicy(
                     """

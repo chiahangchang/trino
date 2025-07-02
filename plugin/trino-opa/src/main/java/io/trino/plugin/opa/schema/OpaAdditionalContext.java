@@ -17,12 +17,10 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-import static java.util.Objects.requireNonNull;
-
 public record OpaAdditionalContext(Map<String, String> properties)
 {
     public OpaAdditionalContext
     {
-        properties = ImmutableMap.copyOf(requireNonNull(properties, "properties is null"));
+        properties = ImmutableMap.copyOf(properties);
     }
 }

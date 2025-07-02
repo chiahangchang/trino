@@ -35,6 +35,7 @@ import io.trino.spi.security.SystemSecurityContext;
 import io.trino.spi.security.TrinoPrincipal;
 import io.trino.spi.security.ViewExpression;
 import io.trino.spi.type.VarcharType;
+import org.intellij.lang.annotations.Language;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -705,6 +706,7 @@ public class TestOpaAccessControl
 
         authorizer.checkCanExecuteQuery(sampleIdentityWithGroups, TEST_QUERY_ID);
 
+        @Language("JSON")
         String expectedRequest =
                 """
                 {

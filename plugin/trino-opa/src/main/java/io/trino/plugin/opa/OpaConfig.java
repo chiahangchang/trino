@@ -150,7 +150,7 @@ public class OpaConfig
     }
 
     @Config("opa.additional-context-file")
-    @ConfigDescription("file in JSON format containing additional tenant-specified context properties")
+    @ConfigDescription("JSON file containing additional tenant-specified context properties")
     public OpaConfig setAdditionalContextFile(File additionalContextFile)
     {
         this.additionalContextFile = Optional.ofNullable(additionalContextFile);
